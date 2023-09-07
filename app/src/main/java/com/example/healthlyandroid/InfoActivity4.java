@@ -75,6 +75,24 @@ public class InfoActivity4 extends AppCompatActivity {
                 if (snapshot.exists()) {
                     String goal = snapshot.child("goal").getValue(String.class);
                     if ("MAINTAIN WEIGHT".equals(goal)) {
+                        int height = snapshot.child("height").getValue(Integer.class);
+                        int weight = snapshot.child("weight").getValue(Integer.class);
+                        int age = snapshot.child("age").getValue(Integer.class);
+                        String gender = snapshot.child("gender").getValue(String.class);
+
+                        double bmr;
+                        if (gender.equals("Male")) {
+                            bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+                        } else {
+                            bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+                        }
+
+                        double averageMultiplier = 1.5; // Ustalony stały współczynnik dla każdego użytkownika uśredniając aktywnośc fizyczną"
+                        double goalCalories = bmr * averageMultiplier; // Przeliczenie zapotrzebowania kalorycznego do utrzymania wagi
+
+                        // Zapisanie wartości goalCalories w bazie danych
+                        userReference.child("goalCalorie").setValue((int) goalCalories);
+
                         openHomeActivity();
                     } else {
                         openGoalWeightActivity();

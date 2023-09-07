@@ -30,12 +30,14 @@ public class ProgressActivity extends AppCompatActivity {
     private TextView resultTextView;
     private TextView weightTextView;
     private TextView weightGoalTextView;
+    private TextView calorieTextView;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private int weight;
     private int height;
     private int age;
     private String userId;
+    private String activityLevel; // Dodana deklaracja zmiennej activityLevel
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,6 +48,7 @@ public class ProgressActivity extends AppCompatActivity {
         resultTextView = findViewById(R.id.resultTextView);
         weightTextView = findViewById(R.id.weight);
         weightGoalTextView = findViewById(R.id.weight_goal);
+        calorieTextView = findViewById(R.id.calorieTextView);
         View chartContainer = findViewById(R.id.chart_container);
         View chart2Container = findViewById(R.id.chart2_container);
 
@@ -66,17 +69,19 @@ public class ProgressActivity extends AppCompatActivity {
                         int goalWeight = snapshot.child("goalWeight").getValue(Integer.class);
                         String goal = snapshot.child("goal").getValue(String.class);
                         age = snapshot.child("age").getValue(Integer.class);
+                        activityLevel = snapshot.child("activityLevel").getValue(String.class); // Przypisanie wartości activityLevel
                         if ("GAIN WEIGHT".equals(goal)) {
                             displayGainWeightResult(goalWeight);
-                            chartContainer.setVisibility(View.VISIBLE); // Ustawienie widoczności kontenera dla celu "GAIN WEIGHT"
-                            chart2Container.setVisibility(View.INVISIBLE); // Ustawienie niewidoczności kontenera dla celu "GAIN WEIGHT"
+                            chartContainer.setVisibility(View.VISIBLE);
+                            chart2Container.setVisibility(View.INVISIBLE);
                         } else if ("LOSE WEIGHT".equals(goal)) {
                             displayLoseWeightResult(goalWeight);
-                            chartContainer.setVisibility(View.INVISIBLE); // Ustawienie niewidoczności kontenera dla celu "LOSE WEIGHT"
-                            chart2Container.setVisibility(View.VISIBLE); // Ustawienie widoczności kontenera dla celu "LOSE WEIGHT"
+                            chartContainer.setVisibility(View.INVISIBLE);
+                            chart2Container.setVisibility(View.VISIBLE);
                         }
                         weightTextView.setText(String.valueOf(weight) + " kg");
                         weightGoalTextView.setText(String.valueOf(goalWeight) + " kg");
+                        calculateCalorieIntake(gender, goal);
                     }
                 }
 
@@ -98,45 +103,66 @@ public class ProgressActivity extends AppCompatActivity {
     }
 
     private void displayGainWeightResult(int goalWeight) {
-        // Obliczenie przewidywanego czasu osiągnięcia celowej wagi na podstawie tempo przybierania na wadze
-
-        double weeklyWeightGain = 0.5; // Tempo przybierania na wadze w kilogramach na tydzień
-
-        int daysToGoalWeight = (int) Math.ceil((goalWeight - weight) / (weeklyWeightGain / 7)); // Obliczenie liczby dni do osiągnięcia celowej wagi
-
-        // Obliczenie daty osiągnięcia celowej wagi
+        double weeklyWeightGain = 0.5;
+        int daysToGoalWeight = (int) Math.ceil((goalWeight - weight) / (weeklyWeightGain / 7));
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, daysToGoalWeight);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         String month = getMonthName(calendar.get(Calendar.MONTH));
         int year = calendar.get(Calendar.YEAR);
-
         String resultMessage = dayOfMonth + " " + month + " " + year;
-
         resultTextView.setText(resultMessage);
     }
 
     private void displayLoseWeightResult(int goalWeight) {
-        // Obliczenie przewidywanego czasu osiągnięcia celowej wagi na podstawie tempa tracenia wagi
-
-        double weeklyWeightLoss = 0.5; // Tempo tracenia wagi w kilogramach na tydzień
-
-        int daysToGoalWeight = (int) Math.ceil((weight - goalWeight) / (weeklyWeightLoss / 7)); // Obliczenie liczby dni do osiągnięcia celowej wagi
-
-        // Obliczenie daty osiągnięcia celowej wagi
+        double weeklyWeightLoss = 0.5;
+        int daysToGoalWeight = (int) Math.ceil((weight - goalWeight) / (weeklyWeightLoss / 7));
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, daysToGoalWeight);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         String month = getMonthName(calendar.get(Calendar.MONTH));
         int year = calendar.get(Calendar.YEAR);
-
         String resultMessage = dayOfMonth + " " + month + " " + year;
-
         resultTextView.setText(resultMessage);
     }
 
     private String getMonthName(int month) {
         return new DateFormatSymbols().getMonths()[month];
+    }
+
+    private void calculateCalorieIntake(String gender, String goal) {
+        double bmr;
+        if (gender.equals("Male")) {
+            bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+        } else {
+            bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+        }
+
+        double activityMultiplier;
+        if (activityLevel.equals("Low")) {
+            activityMultiplier = 1.2;
+        } else if (activityLevel.equals("Medium")) {
+            activityMultiplier = 1.5;
+        } else {
+            activityMultiplier = 1.7;
+        }
+
+        double goalCalories;
+        if (goal.equals("GAIN WEIGHT")) {
+            goalCalories = (bmr * activityMultiplier) + 500;
+        } else if (goal.equals("LOSE WEIGHT")) {
+            goalCalories = (bmr * activityMultiplier) - 500;
+        } else {
+            goalCalories = bmr * activityMultiplier ;
+        }
+
+
+        calorieTextView.setText(String.valueOf((int) goalCalories + " kcal"));
+
+        // Zapisanie wartości goalCalories w bazie danych
+        DatabaseReference userReference = databaseReference.child("users").child(userId);
+        userReference.child("goalCalorie").setValue((int) goalCalories);
+
     }
 
     private void saveGoalDateToDatabase() {

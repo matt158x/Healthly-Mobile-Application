@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,23 +9,294 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Witaj Mateuszku"
+        android:text="HealthyLife"
         android:fontFamily="@font/damion"
-        android:textSize="40dp"
+        android:textSize="30dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/mati"
+        android:id="@+id/logo"
         android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/logo"
+        android:id="@+id/linear_calories"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/left_text_view"
+            android:text="0"
+            android:fontFamily="@font/alkatr"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:gravity="center"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/goal_calorie_text"
+            android:text="0"
+            android:fontFamily="@font/alkatr"
+            android:textColor="@color/white"
+            android:textSize="50dp"
+            android:gravity="center"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/right_text_view"
+            android:text="0"
+            android:fontFamily="@font/alkatr"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:gravity="center"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_calories"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-25dp"
+        android:id="@+id/linear_text_calories"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/left_calories_text"
+            android:text="Eaten"
+            android:fontFamily="@font/alkatr"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/goal_calorie_view"
+            android:text="Goal"
+            android:fontFamily="@font/alkatr"
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/right_calories_text"
+            android:text="Burned"
+            android:fontFamily="@font/alkatr"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+    <!-- Pozostałe elementy layoutu -->
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_grey_home_button"
+        android:layout_below="@id/linear_text_calories"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proteins"
+                android:fontFamily="@font/alkatr"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/proteins_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:layout_marginTop="-5dp"
+                android:fontFamily="@font/alkatr"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carbs"
+                android:fontFamily="@font/alkatr"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/carbs_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginTop="-5dp"
+                android:fontFamily="@font/alkatr"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fat"
+                android:fontFamily="@font/alkatr"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/fat_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginTop="-5dp"
+                android:fontFamily="@font/alkatr"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/breakfast_button"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
         android:layout_centerVertical="true"
-        android:layout_marginStart="80dp"/>
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_grey_home_button"
+        android:text="Add meal"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:paddingStart="20dp"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:drawableStart="@drawable/breakfast1"
+        android:drawableEnd="@drawable/ic_round_control_point_24"
+        android:textAlignment="textStart"
+        android:paddingEnd="10dp"
+        android:drawablePadding="20dp"
+
+    />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/lunch_button"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/breakfast_button"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_grey_home_button"
+        android:text="Add water"
+        android:drawableStart="@drawable/lunch1"
+        android:drawablePadding="20dp"
+        android:paddingStart="20dp"
+        android:drawableEnd="@drawable/ic_round_control_point_24"
+        android:textAlignment="textStart"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:paddingEnd="10dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dinner_button"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/lunch_button"
+        android:drawableStart="@drawable/dinner1"
+        android:drawableEnd="@drawable/ic_round_control_point_24"
+        android:paddingStart="20dp"
+        android:drawablePadding="20dp"
+        android:textAlignment="textStart"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_grey_home_button"
+        android:paddingEnd="10dp"
+        android:text="Add workout"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+    <!-- Pozostałe elementy layoutu -->
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mati"
-        android:layout_marginTop="40dp"
-        android:text="Logtout"
+        android:text="Logout"
         android:id="@+id/logout_button"
+        android:layout_marginTop="20dp"
         android:background="@drawable/register_button"
+        android:layout_below="@+id/dinner_button"
         android:layout_centerHorizontal="true"/>
 
+
+    <ListView
+        android:id="@+id/ingredients_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logout_button"
+        android:layout_marginTop="20dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:background="@color/white"
+        android:padding="16dp"
+        android:visibility="gone" />
+
 </RelativeLayout>
+
+

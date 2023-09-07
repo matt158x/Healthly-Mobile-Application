@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
 
                         Toast.makeText(RegisterActivity.this, "Użytkownik został pomyślnie utworzony.", Toast.LENGTH_SHORT).show();
-                        openStartActivity();
+                        openGoalActivity1();
                     } else {
                         // Rejestracja nie powiodła się
                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
@@ -87,11 +87,11 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-    private void openStartActivity() {
-        // Otwieranie StartActivity
-        // Upewnij się, że StartActivity jest prawidłowo zdefiniowane jako aktywność docelowa w pliku manifestu Twojej aplikacji
+    private void openGoalActivity1() {
+        // Otwieranie GoalActivity
+        // Upewnij się, że GoalActivity jest prawidłowo zdefiniowane jako aktywność docelowa w pliku manifestu Twojej aplikacji
         // Możesz użyć następującego kodu do otwarcia StartActivity:
-        Intent intent = new Intent(RegisterActivity.this, StartActivity.class);
+        Intent intent = new Intent(RegisterActivity.this, GoalActivity1.class);
         startActivity(intent);
         finish();
     }

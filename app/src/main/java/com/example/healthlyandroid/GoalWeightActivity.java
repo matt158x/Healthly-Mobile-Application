@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.healthlyandroid.HomeActivity;
@@ -18,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class GoalWeightActivity extends AppCompatActivity {
 
     private NumberPicker goalWeightPicker;
+    private NumberPicker activityLevelPicker;
     private Button nextButton;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
@@ -28,12 +31,18 @@ public class GoalWeightActivity extends AppCompatActivity {
         setContentView(R.layout.activity_goal_weight);
 
         goalWeightPicker = findViewById(R.id.goal_weight);
+        activityLevelPicker = findViewById(R.id.activity_level_picker);
         nextButton = findViewById(R.id.next_button4);
 
         // Ustawienie wartości dla NumberPicker
         goalWeightPicker.setMinValue(0);
         goalWeightPicker.setMaxValue(200);
         goalWeightPicker.setValue(70);
+
+        // Ustawienie wartości dla Activity Level NumberPicker
+        activityLevelPicker.setMinValue(0);
+        activityLevelPicker.setMaxValue(2);
+        activityLevelPicker.setDisplayedValues(new String[]{"Low", "Medium", "High"});
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -42,6 +51,7 @@ public class GoalWeightActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveGoalWeight();
+                saveActivityLevel();
             }
         });
     }
@@ -53,6 +63,17 @@ public class GoalWeightActivity extends AppCompatActivity {
         if (currentUser != null) {
             String userId = currentUser.getUid();
             databaseReference.child("users").child(userId).child("goalWeight").setValue(goalWeight);
+        }
+    }
+
+    private void saveActivityLevel() {
+        String[] activityLevels = {"Low", "Medium", "High"};
+        String activityLevel = activityLevels[activityLevelPicker.getValue()];
+
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            databaseReference.child("users").child(userId).child("activityLevel").setValue(activityLevel);
         }
 
         openHomeActivity();

@@ -96,7 +96,7 @@
         android:id="@+id/week"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0.50 kg/week"
+        android:text="0.50 kg / week"
         android:textColor="@color/white"
         android:fontFamily="sans-serif-condensed-light"
         android:layout_below="@id/achievment"
@@ -108,13 +108,13 @@
         android:id="@+id/recommend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recommend"
+        android:text="Recommend calories intake per day:"
         android:textColor="@color/white"
         android:fontFamily="sans-serif-condensed-light"
         android:layout_below="@id/week"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:textSize="15sp"/>
+        android:textSize="18sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -123,9 +123,21 @@
         android:textColor="@color/white"
         android:fontFamily="sans-serif"
         android:layout_below="@id/recommend"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
         android:textSize="15sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:fontFamily="@font/alkatr"
+        android:textSize="22dp"
+        android:id="@+id/calorieTextView"
+        android:layout_marginTop="20dp"
+        android:textColor="#25ba3a"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/recommend"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/next_button4"
